@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random-user</title>
+    <style>
+        .user-profile {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #avatar {
+            margin: 0.3em;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="user-profile">
+        <h1>Random user</h1>
+        <div class="row">
+            <div class="column">
+                <img id="avatar" src="" alt="">
+            </div>
+            <div class="column">
+                <div id="fullname">fullname</div>
+                <div id="username">username</div>
+                <div id="user-details">
+                    <div id="email">email</div>
+                    <div id="country">country</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        window.onload = function () {
+            fetch("https://randomuser.me/api")
+                .then(response => response.json())
+                .then(data => dataReady(data))
+        }
+
+        function dataReady(data) {
+            console.log(data);
+            const result = data.results[0];
+
+            const fullname = result.name.title + result.name.first + result.name.last;
+            document.getElementById("fullname").innerHTML = fullname;
+
+            const img = result.picture.large;
+            document.getElementById("avatar").src = img;
+
+            const username = result.login.username;
+            document.getElementById("username").innerHTML = "@" + username;
+
+            const email = result.email;
+            document.getElementById("email").innerHTML = email;
+
+            const country = result.location.timezone.description;
+            document.getElementById("country").innerHTML = country;
+        }
+
+    </script>
+</body>
+
+</html>
